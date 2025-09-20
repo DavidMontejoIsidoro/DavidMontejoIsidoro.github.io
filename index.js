@@ -2,19 +2,35 @@
 
 console.log("Welcome to the Simon Game! Press any key to start.");
 
-const buttonColors = ["red", "blue", "green", "yellow"];
-const gamePattern = [];
-const userClickedPattern = [];
+let buttonColors = ["red", "blue", "green", "yellow"];
+let gamePattern = [];
+let userClickedPattern = [];
 
 let started = false;
 
 // Create a new variable called level and start at level 0.
 let level = 0;
 
+// Inicia juego con teclado o toque (móvil)
+$(document).on("keydown", startGameOnce);
+$(document).on("touchstart", startGameOnce);
+
+function startGameOnce() {
+  if (!started) {
+    started = true;
+    level = 0;
+    $("#level-title").text("Level " + level);
+    nextSequence();
+  }
+}
+
 function nextSequence() {
   userClickedPattern.length = 0; // Clear the userClickedPattern for the next level
   level++;
   $("#level-title").text("Level " + level);
+  // Generate a random number between 0 and 3
+  // Use the random number to select a random color from the buttonColors array
+  // Add the new random color to the end of the gamePattern.
   const randomNumber = Math.floor(Math.random() * 4);
   const randomChosenColor = buttonColors[randomNumber];
   gamePattern.push(randomChosenColor);
@@ -31,12 +47,6 @@ function playSound(name) {
   audio.play();
 }
 
-// Arranque después de interacción del usuario (autoplay-safe)
-$(document).one("keydown click", function () {
-  started = true;
-  nextSequence();
-});
-
 // Use jquery to detect button clicks and trigger a handler function
 $(".btn").click(function () {
   if (!started) return; // Ignore clicks if the game hasn't started
@@ -50,27 +60,23 @@ $(".btn").click(function () {
   // called animatePress() to animate the button that gets clicked.
   animatePress(userChosenColor);
 
-  // Call checkAnswer() after a user has clicked and chosen their answer, passing in the index of the last answer in the user's sequence.
+  // verify the last step of the user
   checkAnswer(userClickedPattern.length - 1);
 });
 
-// Add a keydown event listener to the document
-$(document).keydown(function () {
-  if (!started) {
-    started = true;
-    nextSequence();
-  }
-});
+
 
 function checkAnswer(currentLevel) {
-
+  // compare step to step
     if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
-      if (userClickedPattern.length === gamePattern.length){
-        setTimeout(function () {
-          nextSequence();
-        }, 1000);
+    // if the user completed the sequence, go to next level
+    if (userClickedPattern.length === gamePattern.length) {
+      setTimeout(function () {
+        nextSequence();
+      }, 800);
       }
     } else {
+      // error sound
       playSound("wrong");
       $("body").addClass("game-over");
       $("#level-title").text("Game Over, Press Any Key to Restart");
@@ -84,6 +90,7 @@ function checkAnswer(currentLevel) {
 }
 
 function startOver() {
+  // reset variables
   level = 0;
   gamePattern = [];
   started = false;
