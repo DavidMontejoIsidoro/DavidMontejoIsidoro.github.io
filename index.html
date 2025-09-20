@@ -1,46 +1,79 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <title>Simon</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bitcount+Ink&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+  <link href="https://fonts.googleapis.com/css2?family=Bitcount+Ink&display=swap" rel="stylesheet" />
 </head>
 
 <body>
-  <h1 id="level-title">Press A Key to Start</h1>
-  <div class="container">
+  <!-- Título -->
+  <header>
+    <h1 id="level-title" aria-live="polite">Press Any Key or Tap to Start</h1>
+    <p id="subtitle" class="subtitle">
+      Sigue la secuencia de colores y repítela. ¡Cada nivel agrega un color más!
+    </p>
+  </header>
+
+  <!-- Instrucciones -->
+  <section id="instructions" class="panel">
+    <h2 class="panel-title">Cómo jugar</h2>
+    <ol class="steps">
+      <li><strong>Inicia:</strong> presiona cualquier tecla o toca la pantalla.</li>
+      <li><strong>Observa:</strong> se iluminará un botón y sonará su tono.</li>
+      <li><strong>Repite:</strong> haz clic/toca los botones en el mismo orden.</li>
+      <li><strong>Progreso:</strong> al acertar toda la secuencia, se agrega un nuevo color.</li>
+      <li><strong>Fallo:</strong> si te equivocas, verás “Game Over”. Presiona una tecla o toca para reiniciar.</li>
+    </ol>
+
+    <div class="legend">
+      <span class="dot green" aria-hidden="true"></span> Green
+      <span class="dot red" aria-hidden="true"></span> Red
+      <span class="dot yellow" aria-hidden="true"></span> Yellow
+      <span class="dot blue" aria-hidden="true"></span> Blue
+    </div>
+
+    <p class="hint">
+      Sugerencia: sube el volumen para escuchar los tonos. En móvil, simplemente toca la pantalla para iniciar.
+    </p>
+  </section>
+
+  <main class="container" aria-label="Tablero Simon">
     <div class="row">
+      <div type="button" id="green" class="btn green"
+           role="button" tabindex="0" aria-label="Green button"></div>
 
-      <div type="button" id="green" class="btn green">
-
-      </div>
-
-      <div type="button" id="red" class="btn red">
-
-      </div>
+      <div type="button" id="red" class="btn red"
+           role="button" tabindex="0" aria-label="Red button"></div>
     </div>
 
     <div class="row">
+      <div type="button" id="yellow" class="btn yellow"
+           role="button" tabindex="0" aria-label="Yellow button"></div>
 
-      <div type="button" id="yellow" class="btn yellow">
-
-      </div>
-      <div type="button" id="blue" class="btn blue">
-
-      </div>
-
+      <div type="button" id="blue" class="btn blue"
+           role="button" tabindex="0" aria-label="Blue button"></div>
     </div>
+  </main>
 
-  </div>
+  <footer class="footer">
+    <p>
+      Controles: teclado (cualquier tecla para iniciar) o toque en pantalla.
+      La dificultad aumenta agregando un color a la secuencia en cada nivel.
+    </p>
+  </footer>
 
-
+  <!-- El Javascript muajaja -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="index.js" charset="utf-8"></script>
 </body>
-
 </html>
